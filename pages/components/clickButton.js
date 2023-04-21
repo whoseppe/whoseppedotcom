@@ -1,19 +1,37 @@
+import React, { useState } from "react";
 import classNames from "classnames";
 
-const ClickButton = ({ handleClick, showButton }) => {
+const ClickButton = ({ onButtonClick, showButton }) => {
+  const [hideButton, setHideButton] = useState(false);
+
+  const handleClick = () => {
+    setHideButton(true);
+    onButtonClick();
+  };
+
   return (
-    <div
-      className={classNames("transition-opacity duration-1000 opacity-0", {
-        "opacity-100": showButton,
-      })}
-    >
-      <button
-        onClick={() => handleClick()}
-        className="border-2 p-4  border-white text-white"
-      >
-        Check out my work
-      </button>
-    </div>
+    <>
+      {!hideButton && (
+        <div>
+          <div
+            className={classNames(
+              "transition-opacity duration-1000 opacity-0 h-16",
+              {
+                "opacity-100": showButton,
+              }
+            )}
+          >
+            <button
+              disabled={!showButton}
+              onClick={() => handleClick()}
+              className="border-2 h-16 w-60 bg-green text-blackish"
+            >
+              Check out my work
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
