@@ -1,8 +1,7 @@
-import Typical from "react-typical";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import classNames from "classnames";
 import { animated, useSpring, easings, useSpringRef } from "@react-spring/web";
-import ClickButton from "./clickButton";
+
 const TypewriterHeader2 = () => {
   const letterH = useSpringRef();
   const letterI = useSpringRef();

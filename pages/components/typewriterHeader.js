@@ -1,68 +1,46 @@
-import Typical from "react-typical";
-import React, { useState, useEffect } from "react";
-import classNames from "classnames";
-import { animated, useSpring, easings, useSpringRef } from "@react-spring/web";
-import ClickButton from "./clickButton";
+import React, { useEffect, useRef } from "react";
+import Typed from "typed.js";
 const TypewriterHeader = ({ setShowButton }) => {
-  const [line1, setLine1] = useState(true);
-  const [animationLine2, setAnimationLine2] = useState(false);
-  const [line2, setLine2] = useState(false);
-
-  const startLine1 = () => {
-    setTimeout(() => {
-      setLine1(false);
-      startLine2();
-    }, 2800);
-  };
-
-  const startLine2 = () => {
-    setAnimationLine2(true);
-    setTimeout(() => {
-      setAnimationLine2(false);
-      setLine2(true);
-      setShowButton(true);
-    }, 2800);
-  };
+  const headerOneRef = useRef(null);
+  const headerTwoRef = useRef(null);
 
   useEffect(() => {
-    startLine1();
+    const headerOne = new Typed(headerOneRef.current, {
+      strings: ["<p>Hi im giuseppe</p>"],
+      typeSpeed: 60,
+      startDelay: 750,
+      showCursor: false,
+    });
+
+    const headerTwo = new Typed(headerTwoRef.current, {
+      strings: ["<p>I create web and mobile experiences</p>"],
+      typeSpeed: 55,
+      startDelay: 4000,
+      showCursor: false,
+      onComplete: () => setShowButton(true),
+    });
+
+    return () => {
+      // Destroy Typed instance during cleanup to stop animation
+      headerOne.destroy();
+      headerTwo.destroy();
+    };
   }, []);
 
   return (
     <>
       <div className="h-28">
-        {line1 ? (
-          <Typical
-            steps={["Hi im giuseppe", 1000]}
-            wrapper="p"
+        <span
+          ref={headerOneRef}
+          className="text-purple text-2xl uppercase text-center"
+        />
+
+        <div className="w-[310px]">
+          <span
+            ref={headerTwoRef}
             className="text-purple text-2xl uppercase text-center"
           />
-        ) : (
-          <>
-            <div className="flex flex-row flex-nowrap items-center justify-center">
-              <p className="text-purple text-2xl uppercase text-center">
-                Hi im giuseppe
-              </p>
-            </div>
-          </>
-        )}
-        {animationLine2 && (
-          <div className="w-[310px]">
-            <Typical
-              steps={["i create mobile and web experiences.", 1000]}
-              wrapper="p"
-              className="text-purple text-2xl uppercase text-center"
-            />
-          </div>
-        )}
-
-        {line2 && (
-          <div className="flex flex-row flex-wrap items-center justify-center w-[310px]">
-            <p className="text-purple text-2xl uppercase text-center">
-              i create mobile and web experiences.
-            </p>
-          </div>
-        )}
+        </div>
       </div>
     </>
   );
