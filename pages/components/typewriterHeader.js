@@ -13,7 +13,7 @@ const TypewriterHeader = ({ setShowButton }) => {
     });
 
     const headerTwo = new Typed(headerTwoRef.current, {
-      strings: ["<p>I create web and mobile experiences</p>"],
+      strings: ["<p>I create mobile and web experiences</p>"],
       typeSpeed: 55,
       startDelay: 4000,
       showCursor: false,
